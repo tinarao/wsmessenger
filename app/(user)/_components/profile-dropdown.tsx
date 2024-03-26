@@ -21,10 +21,7 @@ interface PDProps {
 const ProfileDropdown = ({ session }: PDProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center">
-        <h3 className="font-medium text-sm">
-          {session!.user.name?.split(" ")[0]}
-        </h3>
+      <DropdownMenuTrigger className="flex items-center gap-2 w-full px-4 py-1">
         <Image
           src={session!.user.image as string}
           alt={session!.user.name as string}
@@ -32,6 +29,14 @@ const ProfileDropdown = ({ session }: PDProps) => {
           height={50}
           className="rounded-full"
         />
+        <div className="text-left">
+          <h3 className="font-semibold text-sm">
+            {session!.user.name?.split(" ")[0]}
+          </h3>
+          <p className="text-xs text-gray-700 font-medium">
+            {session!.user.email}
+          </p>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{session?.user.name}</DropdownMenuLabel>
