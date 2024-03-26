@@ -1,20 +1,25 @@
 import { ReactNode } from "react";
-import Header from "./_components/header";
 import { getServerSession } from "next-auth";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
+import Sidebar from "./_components/sidebar";
 
 const UserLayout = async ({ children }: { children: ReactNode }) => {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
-  if (!session) {
-    notFound()
+  if (!session?.user.id) {
+    redirect("/login");
   }
 
   return (
-    <>
-      <Header />
-      <main>{children}</main>
-    </>
+    <div className="grid grid-cols-12">
+      <div className="col-span-1">
+        <Sidebar />
+      </div>
+      <main className="col-span-11 px-8 py-6 overflow-y-auto">
+        {children}
+      </main>
+    </div>
   );
 };
 
