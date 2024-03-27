@@ -20,9 +20,9 @@ const ReqPage = async () => {
   )
 
   return (
-    <section>
+    <section className="pt-8 px-8">
       <div>
-        <FriendRequestList sessionId={session!.user.id} incomingRequests={incomingFriendRequest} />
+        <FriendRequestList sessionId={session!.user.id} incomingRequests={incomingFriendRequest as FriendRequest[]} />
       </div>
     </section>
   );

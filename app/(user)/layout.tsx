@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import Sidebar from "./_components/sidebar";
-import Header from "./_components/header";
 
 const UserLayout = async ({ children }: { children: ReactNode }) => {
   const session = await getServerSession(authOptions);
@@ -12,10 +11,10 @@ const UserLayout = async ({ children }: { children: ReactNode }) => {
     redirect("/login");
   }
 
-  return (
+  return (  
     <div className="grid grid-cols-12">
       <div className="col-span-2 h-screen">
-        <Sidebar />
+        <Sidebar session={session} />
       </div>
       <main className="col-span-10 overflow-y-auto">
         {/* <Header /> */}

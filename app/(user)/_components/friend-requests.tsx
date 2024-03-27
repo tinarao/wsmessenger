@@ -14,6 +14,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import NotificationBubble from "./notification-bubble";
 
 interface FPProps {
   children: React.ReactNode;
@@ -35,14 +36,12 @@ export const FriendRequestsButton = ({
     useState<number>(initUnseenReqCount);
 
   return (
-    <Button asChild size="sm" variant="ghost" className="w-full">
+    <Button asChild size="sm" variant="menu" className="w-full">
       <Link href="/user/requests" className="flex items-center">
         <UserCircle2Icon className="size-4 mr-2" /> {children}
         <span>
           {unseenReqCount > 0 && (
-            <p className="size-6 p-0 flex justify-center items-center bg-black text-white text-center rounded-full ml-4">
-              {unseenReqCount}
-            </p>
+            <NotificationBubble number={unseenReqCount} />
           )}
         </span>
       </Link>
