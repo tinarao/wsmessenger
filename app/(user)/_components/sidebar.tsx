@@ -6,8 +6,8 @@ import Logo from "@/public/logo.svg";
 import ProfileDropdown from "./profile-dropdown";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import FriendRequests from "./friend-requests";
 import { fetchRedis } from "@/utils/redis";
+import { FriendRequestsButton } from "./friend-requests";
 
 const Sidebar = async () => {
   const session = await getServerSession(authOptions);
@@ -31,12 +31,12 @@ const Sidebar = async () => {
                 <UserPlus className="size-4 mr-2" /> Добавить контакт
               </Link>
             </Button>
-            <FriendRequests 
+            <FriendRequestsButton 
               sessionId={session!.user.id}
               initUnseenReqCount={unseenReqCount}
             >
               Заявки в друзья
-            </FriendRequests>
+            </FriendRequestsButton>
             </div>
           </div>
         </div>

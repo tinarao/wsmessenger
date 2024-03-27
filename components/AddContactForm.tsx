@@ -71,10 +71,11 @@ const AddContactForm = ({ children, className, variant }: ACBProps) => {
   return (
     <form className="max-w-sm" onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <Label htmlFor="email">Почта приятеля</Label>
+        <Label htmlFor="emailAddInput" >Почта приятеля</Label>
       </div>
       <div className="flex gap-4">
         <Input
+          id="emailAddInput"
           {...register("email")}
           type="text"
           className="block"
