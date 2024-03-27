@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation"
 import { fetchRedis } from "./redis"
-import { messageArrayValidator } from "@/lib/validations";
+import { Message, messageArrayValidator } from "@/lib/validations";
 
 export const getChatMessages = async (chatId: string) => {
     try {
@@ -10,7 +10,7 @@ export const getChatMessages = async (chatId: string) => {
         // const messages = messageArrayValidator.parse(reversedDbMessages)
         // console.log(reversedDbMessages)
 
-        return reversedDbMessages;
+        return reversedDbMessages as Message[];
 
     } catch (error) {
         console.error(error)
