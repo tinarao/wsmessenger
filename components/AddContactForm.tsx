@@ -39,7 +39,7 @@ const AddContactForm = ({ children, className, variant }: ACBProps) => {
     try {
       const validatedEmail = addFriendValidator.parse({ email });
 
-      await axios.post("http://localhost:3000/api/contacts/add", {
+      await axios.post("http://localhost:3000/api/requests/send", {
         email: validatedEmail,
       });
 
