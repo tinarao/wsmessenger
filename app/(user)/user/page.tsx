@@ -7,6 +7,7 @@ import { fetchRedis } from "@/utils/redis";
 import { getChatLink } from "@/utils/messages";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
+import MobileHeader from "../_components/mobile-header";
 
 const UserPage = async () => {
   const session = await getServerSession(authOptions);
@@ -31,6 +32,10 @@ const UserPage = async () => {
   );
 
   return (
+    <>
+    <div className="block md:hidden">
+      <MobileHeader />
+    </div>
     <div className="pt-8">
       <h1 className="mx-8 text-6xl text-neutral-700">
         И снова здравствуй, <strong>{session?.user.name?.split(" ")[0]}</strong>
@@ -87,7 +92,7 @@ const UserPage = async () => {
                       <p className="mt-2 max-w-md">
                         <span className="text-neutral-700">
                           {i.lastMessage.senderId === session!.user.id
-                            ? "Вы: "
+                            ? <span className="text-neutral-500">Вы: </span>
                             : ""}
                         </span>
                         {i.lastMessage.text}
@@ -101,6 +106,7 @@ const UserPage = async () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

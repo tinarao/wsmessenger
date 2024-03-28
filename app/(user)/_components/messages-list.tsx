@@ -53,7 +53,7 @@ const MessagesList = ({ initMessages, session, chatCompanion, chatId }: MLProps)
           messages[index - 1]?.senderId === messages[index].senderId;
 
         return (
-          <div key={`${msg.id}-${msg.createdAt}`} className="px-12">
+          <div key={`${msg.id}-${msg.createdAt}`} className="px-4 md:px-12">
             <div
               className={cn("flex items-end", {
                 "justify-end": isCurrentUser,

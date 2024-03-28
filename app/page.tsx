@@ -14,10 +14,10 @@ const Home = async () => {
     <main className="h-screen max-h-screen">
       <title>YouChat</title>
       <header className="border-b">
-        <div className="container py-2 flex justify-center md:justify-between items-center">
+        <div className="container py-2 flex justify-between items-center">
           <div className="flex gap-2 items-center">
             <Image src={Logo} width={40} height={40} alt="YouChat" />
-            <h2 className="font-medium text-lg text-neutral-700">YouChat</h2>
+            <h2 className="font-medium text-lg text-neutral-700 hidden md:block">YouChat</h2>
           </div>
           {session?.user.id ? (
             <div className="hidden md:flex items-center h-fit gap-x-4">

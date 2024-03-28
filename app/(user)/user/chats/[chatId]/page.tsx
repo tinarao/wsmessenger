@@ -1,12 +1,13 @@
 import ChatInput from "@/app/(user)/_components/chat-input";
 import MessagesList from "@/app/(user)/_components/messages-list";
+import MobileMenu from "@/app/(user)/_components/mobile-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { authOptions } from "@/lib/auth";
 import redis from "@/lib/db";
 import { Message } from "@/lib/validations";
 import { getChatMessages } from "@/utils/messages";
-import { Send } from "lucide-react";
+import { Menu, Send } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
@@ -31,9 +32,9 @@ const ChatPage = async ({ params }: { params: { chatId: string } }) => {
 
   return (
     <section className="max-h-screen flex flex-1 h-screen flex-col justify-between">
-      <div className="px-8 py-4 border-b-2 h-20">
+      <div className="flex items-center px-8 py-4 border-b-2 h-20">
         <div className="w-fit flex gap-4">
-          <div className="">
+          <div>
             <div className="relative">
               <div className="size-12">
                 <Image
@@ -56,6 +57,11 @@ const ChatPage = async ({ params }: { params: { chatId: string } }) => {
               {chatCompanion.email}
             </span>
           </div>
+        </div>
+        <div className="block md:hidden ml-auto">
+          <MobileMenu session={session} size="icon" variant="outline">
+            <Menu />
+          </MobileMenu>
         </div>
       </div>
       <div>

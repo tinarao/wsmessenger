@@ -3,6 +3,7 @@ import { fetchRedis } from "@/utils/redis";
 import { getServerSession } from "next-auth";
 import React from "react";
 import { FriendRequestList } from "../../_components/friend-requests";
+import MobileHeader from "../../_components/mobile-header";
 
 const ReqPage = async () => {
   const session = await getServerSession(authOptions);
@@ -20,8 +21,11 @@ const ReqPage = async () => {
   )
 
   return (
-    <section className="pt-8 px-8">
-      <div>
+    <section>
+      <div className="block md:hidden">
+        <MobileHeader />
+      </div>
+      <div className="pt-8 px-8">
         <FriendRequestList sessionId={session!.user.id} incomingRequests={incomingFriendRequest as FriendRequest[]} />
       </div>
     </section>

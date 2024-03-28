@@ -24,12 +24,12 @@ const LoginPage = () => {
   };
 
   return (
-    <main className="flex flex-col h-screen justify-center items-center">
+    <main className="flex flex-col h-screen justify-center items-center px-8 md:px-0">
       <title>YouChat - Авторизация</title>
       <div>
         <Image src={Dudes} width={500} height={500} alt="Неживые люди" />
       </div>
-      <h1 className="text-neutral-700 text-4xl font-bold my-4">
+      <h1 className="text-neutral-700 text-4xl font-bold my-4 text-center">
         Ну ты долго? Только тебя и ждём!
       </h1>
       <div className="space-y-4">
