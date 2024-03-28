@@ -12,10 +12,10 @@ const ReqPage = async () => {
   )) as string[];
 
   const incomingFriendRequest = await Promise.all(
-    incomingSenderIDs.map(async (senderID) => {
-      const senderStr = await fetchRedis("get", `user:${senderID}`) as string;
+    incomingSenderIDs.map(async (senderId) => {
+      const senderStr = await fetchRedis("get", `user:${senderId}`) as string;
       const sender = JSON.parse(senderStr);
-      return { senderID, senderEmail: sender.email };
+      return { senderId, senderEmail: sender.email };
     })
   )
 

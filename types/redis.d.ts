@@ -19,7 +19,8 @@ interface Message {
 }
 
 interface FriendRequest {
-    id: string
+    id?: string
     senderId: string
-    recieverId: string
+    recieverId?: string
+    senderEmail?: string
 }

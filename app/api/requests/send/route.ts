@@ -1,6 +1,8 @@
 import { authOptions } from "@/lib/auth";
 import redis from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 import { addFriendValidator } from "@/lib/validations";
+import { toPusherKey } from "@/utils/messages";
 import { fetchRedis } from "@/utils/redis";
 import { getServerSession } from "next-auth";
 import { z } from "zod";
@@ -48,6 +50,18 @@ export const POST = async (req: Request) => {
         }
 
         // end validation
+
+        // ws job
+
+        pusherServer.trigger(
+            toPusherKey(`user:${idToAdd}:incoming_friend_requests`),
+            "incoming_friend_requests", {
+            senderId: session.user.id,
+            senderEmail: session.user.email
+        }),
+
+
+        // ws job end
 
         redis.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id);
         return new Response("Запрос отправлен!", { status: 200 })

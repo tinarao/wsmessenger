@@ -21,3 +21,7 @@ export const getChatLink = (id1: string, id2: string) => {
     const sortedIDs = [id1, id2].sort();
     return `${sortedIDs[0]}-to-${sortedIDs[1]}`
 }
+
+export const toPusherKey = (key: string) => {
+    return key.replace(/:/g, "__")
+}

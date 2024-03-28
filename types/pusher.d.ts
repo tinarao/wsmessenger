@@ -1,4 +1,4 @@
-interface FriendRequest {
-    senderID: string;
+interface PusherFriendRequest {
+    senderId: string;
     senderEmail: string;
 }
