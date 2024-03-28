@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import NotificationBubble from "./notification-bubble";
 import { pusherClient } from "@/lib/pusher";
 import { toPusherKey } from "@/utils/messages";
+import { getLocalUrl } from "@/utils/getlocal";
 
 interface FPProps {
   children: React.ReactNode;
@@ -69,6 +70,7 @@ export const FriendRequestList = ({
   const [requests, setRequests] = useState<FriendRequest[]>(incomingRequests);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const localURL = getLocalUrl();
 
   useEffect(() => {
     pusherClient.subscribe(
@@ -93,7 +95,7 @@ export const FriendRequestList = ({
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:3000/api/requests/accept", {
+      await axios.post(`${localURL}/api/requests/accept`, {
         id: senderID,
       });
       setRequests((p) => p.filter((i) => i.senderId !== senderID));
@@ -109,7 +111,7 @@ export const FriendRequestList = ({
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:3000/api/requests/deny", {
+      await axios.post(`${localURL}/api/requests/deny`, {
         id: senderID,
       });
       setRequests((p) => p.filter((i) => i.senderId !== senderID));

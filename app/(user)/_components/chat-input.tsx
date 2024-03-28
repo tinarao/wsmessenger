@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { getLocalUrl } from "@/utils/getlocal";
 import axios from "axios";
 import { LoaderCircleIcon, Send } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -12,7 +13,9 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
   const [inputValue, setInputValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
+
+  const localURL = getLocalUrl();
 
   const sendMessage = async () => {
     if (inputValue === "") {
@@ -21,7 +24,8 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
 
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:3000/api/message/send", {
+      
+      const res = await axios.post(`${localURL}/api/message/send`, {
         text: inputValue,
         chatId,
       });

@@ -10,6 +10,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getLocalUrl } from "@/utils/getlocal";
 
 interface ACBProps {
   children?: React.ReactNode;
@@ -29,6 +30,7 @@ type Data = z.infer<typeof addFriendValidator>;
 
 const AddContactForm = ({ children, className, variant }: ACBProps) => {
   const [loading, setLoading] = useState(false);
+  const localUrl = getLocalUrl();
 
   const {
     register,
@@ -44,7 +46,7 @@ const AddContactForm = ({ children, className, variant }: ACBProps) => {
     try {
       const validatedEmail = addFriendValidator.parse({ email });
 
-      await axios.post("http://localhost:3000/api/requests/send", {
+      await axios.post(`${localUrl}/api/requests/send`, {
         email: validatedEmail,
       });
 
