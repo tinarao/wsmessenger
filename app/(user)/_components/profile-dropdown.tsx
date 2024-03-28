@@ -8,10 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowLeftFromLine, ArrowRightFromLine, UserMinus2 } from "lucide-react";
+import { ArrowLeftFromLine, MessageSquareDot } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface PDProps {
@@ -45,7 +46,13 @@ const ProfileDropdown = ({ session }: PDProps) => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut()}>
+        <DropdownMenuItem>
+          <Link href="/user" className="flex items-center">
+            <MessageSquareDot className="size-4 mr-2"/> Последние сообщения
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut()} className="cursor-pointer">
           <ArrowLeftFromLine className="size-4 mr-2" /> Выйти
         </DropdownMenuItem>
       </DropdownMenuContent>
