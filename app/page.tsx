@@ -1,19 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
-import { MessageCircle, MessageCircleHeart, User2Icon } from "lucide-react";
+import { MessageCircle, User2Icon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import Dudes from "@/public/dudes.svg";
 import Image from "next/image";
 import Logo from "@/public/logo.svg";
-import { redirect } from "next/navigation";
-import { Separator } from "@/components/ui/separator";
+import { getLocalUrl } from "@/utils/getlocal";
 
 const Home = async () => {
   const session = await getServerSession(authOptions);
+  const localURL = getLocalUrl();
 
   return (
     <main className="h-screen max-h-screen">
+      <h1>
+        {localURL}
+      </h1>
       <title>YouChat</title>
       <header className="border-b">
         <div className="container py-2 flex justify-center md:justify-between items-center">
