@@ -36,13 +36,17 @@ export const POST = async (req: Request) => {
             createdAt: timestamp
         }
         const message = messageValidator.parse(messageData);
-
-
         
         await pusherServer.trigger(
             toPusherKey(`chat:${chatId}`),
             "incoming_message",
             message
+        )
+
+        await pusherServer.trigger(
+            toPusherKey(`user:${friendID}:chats`),
+            "new_message",
+            { ...message, senderImage: sender.image, senderName: sender.name }
         )
             
         await redis.zadd(`chat:${chatId}:messages`, { score: timestamp, member: JSON.stringify(message) })

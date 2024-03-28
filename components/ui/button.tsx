@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "justify-center bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "justify-center bg-neutral-700 text-primary-foreground hover:bg-primary/90",
         menu: "justify-start hover:bg-accent hover:text-accent-foreground",
         destructive:
           "justify-center bg-destructive text-destructive-foreground hover:bg-destructive/90",

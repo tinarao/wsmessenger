@@ -1,23 +1,58 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { getChatLink } from "@/utils/messages";
+import { getChatLink, toPusherKey } from "@/utils/messages";
 import { User } from "lucide-react";
 import { Session } from "next-auth";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import NotificationBubble from "./notification-bubble";
+import { pusherClient } from "@/lib/pusher";
+import { toast } from "sonner";
+import NewMessageToast from "./new-msg-toast";
 
 interface CLSProps {
   session: Session;
   friends: User[];
 }
 
+interface MessageExtd extends Message {
+  senderImage: string
+  senderName: string
+}
+
 const ChatsListSidebar = ({ session, friends }: CLSProps) => {
   const [unseenMessages, setUnseenMessages] = useState<Message[]>([]);
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter()
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`user:${session.user.id}:chats`));
+    pusherClient.subscribe(toPusherKey(`user:${session.user.id}:friends`));
+
+    const newMessageHandler = (message: MessageExtd) => {
+      const chatLink = getChatLink(session.user.id, message.senderId)
+      const isOnChatPage = pathname === `/user/chat/${chatLink}`
+
+      if (isOnChatPage) return;
+
+      toast(<NewMessageToast message={message.text} senderImage={message.senderImage} senderName={message.senderName} />)
+    }
+
+    const newFriendHandler = () => {
+      router.refresh();
+      toast.info("Новая заявка в друзья!")
+    }
+
+    pusherClient.bind("new_message", newMessageHandler);
+    pusherClient.bind("new_friend", newFriendHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`user:${session.user.id}:chats`));
+      pusherClient.unsubscribe(toPusherKey(`user:${session.user.id}:friends`));
+    }
+  }, [session.user.id])
 
   useEffect(() => {
     if (pathname?.includes("chat")) {
@@ -52,7 +87,7 @@ const ChatsListSidebar = ({ session, friends }: CLSProps) => {
                     alt={friend.name}
                     className="size-4 mr-2 rounded-full"
                   />{" "}
-                  {friend.name}
+                  {friend.name.split(" ")[0]}
                   {unseenMessages.length !== 0 && (
                     <NotificationBubble number={unseenMessages.length} />
                   )}

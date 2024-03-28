@@ -30,8 +30,8 @@ const ChatPage = async ({ params }: { params: { chatId: string } }) => {
   const initMessages = await getChatMessages(chatId);
 
   return (
-    <section className="h-full max-h-[calc(100vh-10rem)] flex-1 flex flex-col justify-between">
-      <div className="px-8 py-4 border-b">
+    <section className="max-h-screen flex flex-1 h-screen flex-col justify-between">
+      <div className="px-8 py-4 border-b-2 h-20">
         <div className="w-fit flex gap-4">
           <div className="">
             <div className="relative">
@@ -59,13 +59,17 @@ const ChatPage = async ({ params }: { params: { chatId: string } }) => {
         </div>
       </div>
       <div>
-        <MessagesList
-          chatId={chatId}
-          session={session}
-          chatCompanion={chatCompanion}
-          initMessages={initMessages as Message[]}
-        />
+        <div className="overflow-y-auto h-[calc(100vh-10rem)]">
+          <MessagesList
+            chatId={chatId}
+            session={session}
+            chatCompanion={chatCompanion}
+            initMessages={initMessages as Message[]}
+          />
+        </div>
+        <div className="h-20">
         <ChatInput chatId={chatId} />
+        </div>
       </div>
     </section>
   );

@@ -35,7 +35,7 @@ const ChatInput = ({ chatId }: { chatId: string }) => {
   };
 
   return (
-    <div className="h-full px-8 flex justify-center items-center border-t-2">
+    <div className="px-8 flex justify-center items-center border-t-2">
       <div className="px-2 py-2 relative flex-1 overflow-hidden flex items-center gap-4">
         <TextareaAutosize
           className="max-h-24 w-full block border-neutral-300 resize-none bg-neutral-100 text-neutral-700 rounded-lg focus:border-neutral-400 focus:ring-neutral-700 font-medium disabled:bg-neutral-100 disabled:text-neutral-300"

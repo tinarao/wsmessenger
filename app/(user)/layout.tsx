@@ -13,10 +13,10 @@ const UserLayout = async ({ children }: { children: ReactNode }) => {
 
   return (  
     <div className="grid grid-cols-12">
-      <div className="col-span-2 h-screen">
+      <div className="col-span-4 xl:col-span-2 h-screen">
         <Sidebar session={session} />
       </div>
-      <main className="col-span-10 overflow-y-auto">
+      <main className="col-span-8 xl:col-span-10 overflow-y-auto">
         {/* <Header /> */}
         {children}
       </main>

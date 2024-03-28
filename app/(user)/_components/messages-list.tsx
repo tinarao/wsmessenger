@@ -45,7 +45,7 @@ const MessagesList = ({ initMessages, session, chatCompanion, chatId }: MLProps)
   }, [chatId])
 
   return (
-    <div className="flex h-full flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto">
+    <div className="flex flex-col-reverse gap-2 p-3 overflow-y-auto">
       <div ref={scrollDownRef} />
       {messages.map((msg, index) => {
         const isCurrentUser = msg.senderId === session.user.id;
@@ -53,7 +53,7 @@ const MessagesList = ({ initMessages, session, chatCompanion, chatId }: MLProps)
           messages[index - 1]?.senderId === messages[index].senderId;
 
         return (
-          <div key={`${msg.id}-${msg.createdAt}`} className="">
+          <div key={`${msg.id}-${msg.createdAt}`} className="px-12">
             <div
               className={cn("flex items-end", {
                 "justify-end": isCurrentUser,
@@ -61,7 +61,7 @@ const MessagesList = ({ initMessages, session, chatCompanion, chatId }: MLProps)
             >
               <div
                 className={cn(
-                  "flex flex-col space-y-2 text-base max-w-xs mx-2",
+                  "flex flex-col text-base max-w-xs mx-2",
                   {
                     "order-1 items-end": isCurrentUser,
                     "order-2 items-start": !isCurrentUser,
