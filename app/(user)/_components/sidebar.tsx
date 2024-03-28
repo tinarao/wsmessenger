@@ -9,6 +9,7 @@ import { fetchRedis } from "@/utils/redis";
 import { FriendRequestsButton } from "./friend-requests";
 import { getFriendsByUserID } from "@/utils/contacts";
 import ChatsListSidebar from "./chats-list";
+import AddFriendModal from "./add-friend-modal";
 
 const Sidebar = async ({ session }: { session: Session }) => {
   const unseenReqCount = (
@@ -31,13 +32,15 @@ const Sidebar = async ({ session }: { session: Session }) => {
             <ChatsListSidebar friends={friends} session={session} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-600">Обзор</h3>
+            <h3 className="text-sm font-semibold text-gray-600">
+              Действия
+            </h3>
             <div className="space-y-2 mt-2">
-              <Button asChild size="sm" variant="menu" className="w-full">
-                <Link href="/user/add">
+              <AddFriendModal username={session.user.name as string}>
+                <Button size="sm" variant="menu" className="w-full">
                   <UserPlus className="size-4 mr-2" /> Добавить контакт
-                </Link>
-              </Button>
+                </Button>
+              </AddFriendModal>
               <FriendRequestsButton
                 sessionId={session!.user.id}
                 initUnseenReqCount={unseenReqCount}

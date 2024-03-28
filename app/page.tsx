@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
-import { MessageCircle, User2Icon } from "lucide-react";
+import { MessageCircle, MessageCircleHeart, User2Icon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import Dudes from "@/public/dudes.svg";
@@ -41,8 +41,10 @@ const Home = async () => {
               </div>
             </div>
           ) : (
-            <Button asChild>
-              <Link href="/login">Приступить к работе</Link>
+            <Button asChild variant="outline">
+              <Link href="/login">
+                <MessageCircle className="size-4 mr-2"/> Начать общение
+              </Link>
             </Button>
           )}
         </div>
@@ -57,7 +59,7 @@ const Home = async () => {
           Медленно, ненадёжно и небезопасно.
         </h1>
         <Button className="mt-8" asChild>
-          <Link href="/user">
+          <Link href={session ? "/user" : "/login"}>
             <MessageCircle className="size-4 mr-2" /> Приступить к работе
           </Link>
         </Button>

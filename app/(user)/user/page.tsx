@@ -1,29 +1,17 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
-import React from "react";
+import Dudes from "@/public/dudes-user.svg"
 
 const UserPage = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <div className="flex h-full items-center justify-center">
-      <div className="border w-fit mx-auto flex items-center gap-4">
-        <div>
-          <Image
-            src={session?.user?.image as string}
-            alt={session?.user?.name as string}
-            width={50}
-            height={50}
-          />
-        </div>
-        <h1 className="text-blue-600">
-          {session?.user.id}
-        </h1>
-        <div>
-          <h1 className="font-medium ">{session?.user?.name?.split(" ")[0]}</h1>
-        </div>
-      </div>
+    <div className="flex flex-col h-full items-center justify-center">
+      <Image src={Dudes} width={800} height={500} alt="Нарисованные люди" />
+      <h1 className="text-6xl text-neutral-700">
+        И снова здравствуй, <strong>{session?.user.name?.split(" ")[0]}</strong>!
+      </h1>
     </div>
   );
 };

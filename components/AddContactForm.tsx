@@ -30,7 +30,12 @@ type Data = z.infer<typeof addFriendValidator>;
 const AddContactForm = ({ children, className, variant }: ACBProps) => {
   const [loading, setLoading] = useState(false);
 
-  const { register, handleSubmit, setError, formState: {errors} } = useForm<Data>({
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm<Data>({
     resolver: zodResolver(addFriendValidator),
   });
 
@@ -46,14 +51,12 @@ const AddContactForm = ({ children, className, variant }: ACBProps) => {
       toast.success("Запрос отправлен!");
     } catch (error) {
       if (error instanceof z.ZodError) {
-        toast.error("Введённый адрес некорректен");
-        setError("email", { message: error.message });
+        setError("email", { message: "Некорректный адрес!" });
         return;
       }
       if (error instanceof AxiosError) {
-        toast.error(
-          error.response?.data
-        );
+        toast.error(error.response?.data);
+        console.log(error)
         setError("email", { message: error.response?.data });
         return;
       }
@@ -65,29 +68,27 @@ const AddContactForm = ({ children, className, variant }: ACBProps) => {
   };
 
   const onSubmit = (data: Data) => {
-    addFriend(data.email)
-  }
+    addFriend(data.email);
+  };
 
   return (
-    <form className="max-w-sm" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Label htmlFor="emailAddInput" >Почта приятеля</Label>
-      </div>
-      <div className="flex gap-4">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Label htmlFor="emailAddInput">Почта приятеля</Label>
+      <div className="space-y-4 py-2">
         <Input
           id="emailAddInput"
           {...register("email")}
           type="text"
-          className="block"
           placeholder="tinarao@main.go"
         />
-        <Button disabled={loading} variant={variant} className={className}>
-          {children}
-        </Button>
+        <span className="text-red-500 font-medium text-sm">
+          {errors.email?.message}
+        </span>
+        <hr />
+        <div className="w-fit mx-auto">
+          <Button disabled={loading}>{children}</Button>
+        </div>
       </div>
-      <span className="text-red-500 font-medium text-sm">
-        {errors.email?.message}
-      </span>
     </form>
   );
 };
