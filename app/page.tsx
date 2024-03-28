@@ -47,7 +47,7 @@ const Home = async () => {
           )}
         </div>
       </header>
-      <div className="container flex flex-col pt-24 items-center justify-center">
+      <div className="container h-[90%] flex flex-col items-center justify-center">
         <div>
           <Image src={Dudes} width={500} height={300} alt="Люди общаются" />
         </div>

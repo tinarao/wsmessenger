@@ -22,9 +22,11 @@ const Sidebar = async ({ session }: { session: Session }) => {
 
   return (
     <aside className="border-r h-screen">
-      <div className="h-[10%] flex justify-center items-center border-b">
-        <Image src={Logo} width={50} height={50} alt="Logo" />
-      </div>
+      <Link href="/user">
+        <div className="h-[10%] flex justify-center items-center border-b">
+          <Image src={Logo} width={50} height={50} alt="Logo" />
+        </div>
+      </Link>
       <div className="h-[90%] flex flex-col justify-between py-6 px-6">
         <div className="space-y-4">
           <div>
@@ -32,9 +34,7 @@ const Sidebar = async ({ session }: { session: Session }) => {
             <ChatsListSidebar friends={friends} session={session} />
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-gray-600">
-              Действия
-            </h3>
+            <h3 className="text-sm font-semibold text-gray-600">Действия</h3>
             <div className="space-y-2 mt-2">
               <AddFriendModal username={session.user.name as string}>
                 <Button size="sm" variant="menu" className="w-full">

@@ -16,8 +16,8 @@ const NewMessageToast = ({ senderName, senderImage, message }: NMTProps) => {
       </div>
       <div>
         <div>
-        <h5>
-          Новое сообщение от <span className="font-medium">{senderName}</span>
+        <h5 className="font-bold">
+          {senderName}
         </h5>
         </div>
         <div className="truncate line-clamp-2">

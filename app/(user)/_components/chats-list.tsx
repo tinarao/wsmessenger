@@ -38,6 +38,8 @@ const ChatsListSidebar = ({ session, friends }: CLSProps) => {
       if (isOnChatPage) return;
 
       toast(<NewMessageToast message={message.text} senderImage={message.senderImage} senderName={message.senderName} />)
+    
+      setUnseenMessages(prev => [...prev, message])
     }
 
     const newFriendHandler = () => {
@@ -52,7 +54,7 @@ const ChatsListSidebar = ({ session, friends }: CLSProps) => {
       pusherClient.unsubscribe(toPusherKey(`user:${session.user.id}:chats`));
       pusherClient.unsubscribe(toPusherKey(`user:${session.user.id}:friends`));
     }
-  }, [session.user.id])
+  }, [])
 
   useEffect(() => {
     if (pathname?.includes("chat")) {
