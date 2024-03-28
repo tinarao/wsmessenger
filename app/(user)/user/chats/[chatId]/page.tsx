@@ -60,6 +60,7 @@ const ChatPage = async ({ params }: { params: { chatId: string } }) => {
       </div>
       <div>
         <MessagesList
+          chatId={chatId}
           session={session}
           chatCompanion={chatCompanion}
           initMessages={initMessages as Message[]}

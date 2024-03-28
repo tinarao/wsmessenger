@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth"
 import { nanoid } from "nanoid"
 import { messageValidator } from "@/lib/validations";
 import { z } from "zod";
+import { pusherServer } from "@/lib/pusher";
+import { toPusherKey } from "@/utils/messages";
 
 export const POST = async (req: Request) => {
     try {
@@ -24,7 +26,7 @@ export const POST = async (req: Request) => {
         if (!isFriend) return new Response("Пользователь не авторизован", { status: 401 })
 
         const senderStr = await fetchRedis("get", `user:${session.user.id}`) as string
-        const sender = JSON.parse(senderStr)
+        const sender = JSON.parse(senderStr) as User
 
         const timestamp = Date.now()
         const messageData: Message = {
@@ -35,6 +37,14 @@ export const POST = async (req: Request) => {
         }
         const message = messageValidator.parse(messageData);
 
+
+        
+        await pusherServer.trigger(
+            toPusherKey(`chat:${chatId}`),
+            "incoming_message",
+            message
+        )
+            
         await redis.zadd(`chat:${chatId}:messages`, { score: timestamp, member: JSON.stringify(message) })
         return new Response("Сообщение отправлено!")
     } catch (error) {

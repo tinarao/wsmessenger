@@ -3,24 +3,46 @@
 import { cn } from "@/lib/utils";
 import { Message } from "@/lib/validations";
 import { Session } from "next-auth";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { format } from "date-fns";
 import Image from "next/image";
+import { pusherClient } from "@/lib/pusher";
+import { toPusherKey } from "@/utils/messages";
 
 interface MLProps {
   initMessages: Message[]
   session: Session
   chatCompanion: User
+  chatId: string
 }
 
-const MessagesList = ({ initMessages, session, chatCompanion }: MLProps) => {
+const MessagesList = ({ initMessages, session, chatCompanion, chatId }: MLProps) => {
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Message[]>(initMessages);
 
   const formatTimestamp = (timestamp: number) => {
     return format(timestamp, "HH:mm");
   };
+
+  useEffect(() => {
+    pusherClient.subscribe(
+      toPusherKey(`chat:${chatId}`)
+    )
+
+    const messageHandler = (message: Message) => {
+      setMessages(prev => [message, ...prev])
+    }
+    
+    pusherClient.bind("incoming_message", messageHandler)
+
+    return () => {
+      pusherClient.unsubscribe(
+        toPusherKey(`chat:${chatId}`)
+      );
+      pusherClient.unbind("incoming_message", messageHandler)
+    }
+  }, [chatId])
 
   return (
     <div className="flex h-full flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto">
